@@ -11,15 +11,25 @@
   "license": "ISC",
   "devDependencies": {
     "@rocketseat/eslint-config": "2.1.0",
+    "@types/bcryptjs": "2.4.5",
     "@types/node": "^20.8.7",
+    "@types/supertest": "2.0.15",
+    "@vitest/ui": "0.34.6",
     "eslint": "8.52.0",
     "prisma": "5.4.2",
-    "tsup": "^7.2.0",
+    "supertest": "6.3.3",
+    "tsup": "7.2.0",
     "tsx": "^3.14.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite-tsconfig-paths": "4.2.1",
+    "vitest": "0.34.6"
   },
   "dependencies": {
+    "@fastify/cookie": "9.1.0",
+    "@fastify/jwt": "7.2.2",
     "@prisma/client": "5.4.2",
-    "fastify": "4.24.3"
+    "bcryptjs": "2.4.3",
+    "fastify": "4.24.3",
+    "zod": "3.22.4"
   }
 }
