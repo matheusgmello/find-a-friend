@@ -1,6 +1,7 @@
 import { OrgsRepository } from '@/repositories/orgs-repository'
 import { Org } from '@prisma/client'
 import { hash } from 'bcryptjs'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 interface CreateOrgUseCaseRequest {
   name: string
@@ -35,7 +36,7 @@ export class CreateOrgUseCase {
     const orgWithSameEmail = await this.orgsRepository.findByEmail(email)
 
     if (orgWithSameEmail) {
-      throw new Error('Org with same email already exists!')
+      throw new UserAlreadyExistsError()
     }
 
     const org = await this.orgsRepository.create({
