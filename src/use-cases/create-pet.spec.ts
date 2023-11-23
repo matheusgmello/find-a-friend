@@ -3,6 +3,7 @@ import { describe, expect, it, beforeEach } from 'vitest'
 import { CreatePetUseCase } from './create-pet'
 import { hash } from 'bcryptjs'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let petsRepository: InMemoryPetsRepository
 let orgsRepository: InMemoryOrgsRepository
@@ -12,7 +13,7 @@ describe('Create Pet Use Case', () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository()
     orgsRepository = new InMemoryOrgsRepository()
-    sut = new CreatePetUseCase(petsRepository)
+    sut = new CreatePetUseCase(petsRepository, orgsRepository)
   })
 
   it('should be able to create a pet', async () => {
@@ -39,5 +40,20 @@ describe('Create Pet Use Case', () => {
     })
 
     expect(pet.id).toEqual(expect.any(String))
+  })
+
+  it('should not be able to create a pet with an inexistence org', async () => {
+    await expect(() =>
+      sut.execute({
+        name: 'Toby',
+        about: 'Um poodle com 2 anos de idade',
+        age: '2',
+        ambience: '2',
+        energy_level: '1',
+        size: 'plus',
+        level_independence: '1',
+        org_id: '123',
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })
