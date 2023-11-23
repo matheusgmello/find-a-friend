@@ -31,7 +31,7 @@ describe('Get Details Pet (e2e)', () => {
       },
     })
 
-    const response = await request(app.server).post(`/pets/${pet.id}`).send()
+    const response = await request(app.server).get(`/pets/${pet.id}`).send()
 
     expect(response.statusCode).toEqual(200)
   })

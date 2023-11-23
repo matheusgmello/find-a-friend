@@ -1,4 +1,4 @@
-import { FetchPetsFilters } from '@/use-cases/fetch-pets-by-state-and-city'
+import { FetchPetsFilters } from '@/use-cases/pets/fetch-pets-by-state-and-city'
 import { Pet, Prisma } from '@prisma/client'
 
 export interface PetFindManyByOrgIds {

@@ -4,15 +4,15 @@ import { z } from 'zod'
 
 export async function getDetails(request: FastifyRequest, reply: FastifyReply) {
   const getDetailsParamsSchema = z.object({
-    pet_id: z.string().uuid(),
+    petId: z.string().uuid(),
   })
 
-  const { pet_id } = getDetailsParamsSchema.parse(request.params)
+  const { petId } = getDetailsParamsSchema.parse(request.params)
 
   const getPetDetailsUseCase = makeGetPetDetailsUseCase()
 
   const { org, pet } = await getPetDetailsUseCase.execute({
-    pet_id,
+    pet_id: petId,
   })
 
   return reply.status(200).send({
