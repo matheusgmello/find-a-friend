@@ -1,5 +1,7 @@
 <h1 align="center">🐱 FIND A FRIEND 🐶</h1>
 
+Concluí um projeto de simplificação da adoção de pets, possibilitando buscas detalhadas por cidade, estado e características específicas dos animais. Implementei sólidos princípios de design (SOLID) e estratégias avançadas, incluindo Refresh Token com JWT. Utilizei tecnologias como Node, Docker, Vitest e Fastify para criar uma base robusta, sendo o Docker crucial para eficiente gerenciamento do banco de dados e execução suave do projeto.
+
 <p align="center">
   <img src="./assets/welcome-page.png" alt="Default Image" style="width: 332px"/>
   <img src="./assets/home-page.png" alt="Default Image" style="width: 332px"/>
