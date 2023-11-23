@@ -1,9 +1,9 @@
 <h1 align="center">🐱 FIND A FRIEND 🐶</h1>
 
 <p align="center">
-  <img src="./assets/welcome-page.png" alt="Default Image" style="width: 450px"/>
-  <img src="./assets/home-page.png" alt="Default Image" style="width: 450px"/>
-  <img src="./assets/pet-page.png" alt="Default Image" style="width: 450px"/>
+  <img src="./assets/welcome-page.png" alt="Default Image" style="width: 332px"/>
+  <img src="./assets/home-page.png" alt="Default Image" style="width: 332px"/>
+  <img src="./assets/pet-page.png" alt="Default Image" style="width: 332px"/>
 </p>
 
 ## Tecnologias
