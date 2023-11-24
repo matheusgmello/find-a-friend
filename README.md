@@ -16,11 +16,10 @@ Concluí um projeto de simplificação da adoção de pets, possibilitando busca
 - [JWT](https://jwt.io/introduction)
 - [Docker](https://docs.docker.com/)
 - [Vitest](https://vitest.dev/)
-
 - [React](https://react.dev/learn)
 - [Vite](https://vitejs.dev/guide/)
 - [Tailwind](https://tailwindcss.com/)
-- 
+
 ## Regras da aplicação 
 
 ### RFs (Requisitos funcionais)
