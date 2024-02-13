@@ -1,22 +1,21 @@
-import { Routes, Route } from 'react-router-dom'
-import { Home } from '../pages/Home'
-import { Map } from '../pages/Map'
-import { Pet } from '@/pages/Pet'
-import { Login } from '@/pages/Auth/Login'
-import { Register } from '@/pages/Auth/Register'
-import { Admin } from '@/pages/Admin'
-import { AdminPet } from '@/pages/Admin/Pet'
+import { Route, Routes } from 'react-router-dom'
+
+import { Home } from '@/pages/Home'
+import { Login } from '@/pages/Login'
+import { Map } from '@/pages/Map'
+import { PetCreate } from '@/pages/PetCreate'
+import { PetProfile } from '@/pages/PetProfile'
+import { Register } from '@/pages/Register'
 
 export function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/map" element={<Map />} />
-      <Route path="/pet/:id" element={<Pet />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/admin" element={<Admin />} />
-      <Route path="/admin/pet" element={<AdminPet />} />
+      <Route path="/pet-create" element={<PetCreate />} />
+      <Route path="/pet-profile/:id" element={<PetProfile />} />
     </Routes>
   )
 }

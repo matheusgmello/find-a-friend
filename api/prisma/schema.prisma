@@ -6,40 +6,54 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Org {
-  id            String   @id @default(uuid())
-  name          String
-  email         String   @unique
-  password_hash String
-  whatsapp      String   @unique
-  cep           String
-  endereco      String
-  estado        String
-  cidade        String
-  created_at    DateTime @default(now())
-  Pet           Pet[]
+  id             String @id @default(uuid())
+  name           String
+  email          String
+  address        String
+  cep            String
+  whatsappNumber String
+  password       String
+  Pets           Pet[]
 
   @@map("orgs")
 }
 
 model Pet {
-  id                 String @id @default(uuid())
-  name               String
-  about              String
-  age                String
-  size               String
-  energy_level       String
-  level_independence String
-  ambience           String
-
-  created_at DateTime @default(now())
-
-  org    Org    @relation(fields: [org_id], references: [id])
-  org_id String
+  id                   String                 @id @default(uuid())
+  name                 String
+  description          String
+  city                 String
+  age                  String
+  energy               Int
+  size                 String
+  independence         String
+  type                 String
+  photo                String
+  orgId                String
+  org                  Org                    @relation(fields: [orgId], references: [id])
+  pets                 PetGallery[]
+  adoptionRequirements AdoptionRequirements[]
 
   @@map("pets")
+}
+
+model PetGallery {
+  id    String @id @default(uuid())
+  image String
+  pet   Pet    @relation(fields: [petId], references: [id])
+  petId String
+
+  @@map("pet_gallery")
+}
+
+model AdoptionRequirements {
+  id    String @id @default(uuid())
+  title String
+  pet   Pet    @relation(fields: [petId], references: [id])
+  petId String
 }

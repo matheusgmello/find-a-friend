@@ -1,26 +1,29 @@
-import { Router } from './routes'
+import 'leaflet/dist/leaflet.css'
+import 'react-toastify/dist/ReactToastify.css'
 import { BrowserRouter } from 'react-router-dom'
-import './styles/global.css'
-import { LocationContextProvider } from './context/LocationContext'
-import { AlertContextProvider } from './context/AlertContext'
-import { UserContextProvider } from './context/UserContext'
-import { PetContextProvider } from './context/PetContext'
-import { OrgContextProvider } from './context/OrgContext'
+import { ToastContainer } from 'react-toastify'
+import { ThemeProvider } from 'styled-components'
+import './i18n/zod'
 
-export function App() {
+import { SearchPetsContextProvider } from '@/contexts/SearchPetsContext'
+import { Router } from '@/routes'
+import GlobalStyles, { theme } from '@/styles/global'
+import { AuthOrgContextProvider } from './contexts/AuthOrgContext'
+
+function App() {
   return (
-    <BrowserRouter>
-      <AlertContextProvider>
-        <LocationContextProvider>
-          <UserContextProvider>
-            <PetContextProvider>
-              <OrgContextProvider>
-                <Router />
-              </OrgContextProvider>
-            </PetContextProvider>
-          </UserContextProvider>
-        </LocationContextProvider>
-      </AlertContextProvider>
-    </BrowserRouter>
+    <AuthOrgContextProvider>
+      <SearchPetsContextProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+          <GlobalStyles />
+        </ThemeProvider>
+        <ToastContainer />
+      </SearchPetsContextProvider>
+    </AuthOrgContextProvider>
   )
 }
+
+export default App

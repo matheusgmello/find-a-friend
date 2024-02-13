@@ -1,55 +1,87 @@
-import { Aside } from '@/components/Aside'
-import { Card } from '@/components/Card'
-import { SelectComponent } from '@/components/Select'
-import { petOptions } from '@/utils/petsOptions'
-import { useContext } from 'react'
-import { PetContext } from '@/context/PetContext'
-import { PetType } from '@/models/interfaces/Pet'
-export function Map() {
-  const { pets, changePetType } = useContext(PetContext)
+import { ChangeEvent, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
-  function handleChangePetType(type: PetType) {
-    changePetType(type)
+import chevron from '@/assets/icons/chevron-bottom-blue.svg'
+import { useSearchPets } from '@/contexts/SearchPetsContext'
+import { useFetchPets } from '@/hooks/use-pet'
+import { PetTypeSearchOptions, SearchFilters } from '@/models/pet'
+import { Aside } from '~/Aside'
+import { Card } from '~/Card'
+
+import {
+  Container,
+  Content,
+  Display,
+  Header,
+  HeaderSelect,
+  SelectWrapper,
+} from './styles'
+
+const INITIAL_SEARCH_FILTERS: SearchFilters = {
+  age: '',
+  city: '',
+  energy: '',
+  independence: '',
+  size: '',
+  type: 'all',
+}
+
+function getQueryParams(search: string) {
+  const searchParams = new URLSearchParams(search)
+  const city = searchParams.get('city') || ''
+  return { city }
+}
+
+export function Map() {
+  const { search } = useLocation()
+  const city = getQueryParams(search).city || 'Rio De Janeiro'
+  const { handleSearchFilters, searchFilters } = useSearchPets()
+  const pets = useFetchPets(searchFilters)
+
+  useEffect(() => {
+    handleSearchFilters({
+      ...INITIAL_SEARCH_FILTERS,
+      city,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  async function handleFilterByPetType(e: ChangeEvent<HTMLSelectElement>) {
+    const type = e.target.value as PetTypeSearchOptions
+    handleSearchFilters({ type })
   }
 
   return (
-    <div className="flex max-md:flex-col max-md:overflow-y-auto">
+    <Container>
       <Aside />
 
-      <div className="flex-1 bg-red-100 max-md:pt-12 pt-40 px-8 pb-12 h-screen max-md:overflow-y-hidden overflow-y-auto home">
-        <div className="flex max-md:flex-col max-md:gap-6 items-center justify-between mb-11 ">
-          <p className="text-xl leading-8 font-normal max-md:text-center text-blue-900">
-            Encontre
-            <span className="font-extrabold"> {pets.length} amigos</span> na sua
-            cidade
+      <Content>
+        <Header>
+          <p>
+            Encontre <span>{pets.length} amigos</span> na sua cidade
           </p>
-          <div className="relative max-md:w-full">
-            <SelectComponent
-              name="pets"
-              selectLabel="Selecione os tipos"
-              id="pets"
-              options={petOptions}
-              defaultValue={petOptions[0].value}
-              className="w-52 h-12 flex items-center justify-between py-4 px-5 border-none rounded-2xl max-md:w-full bg-red-150 outline-none appearance-none font-Nunito text-base text-blue-900"
-              onValueChange={(value: PetType) => {
-                handleChangePetType(value)
-              }}
-            />
-          </div>
-        </div>
-        <div className="grid justify-items-center items-start grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1 gap-8">
-          {!!pets &&
-            pets.map((pet) => (
-              <Card
-                to={`/Pet/${pet.id}`}
-                key={pet.id}
-                path={pet.photo_url}
-                type={pet.type}
-                name={pet.name}
-              />
-            ))}
-        </div>
-      </div>
-    </div>
+          <SelectWrapper>
+            <HeaderSelect
+              id="type"
+              name="type"
+              onChange={handleFilterByPetType}
+              value={searchFilters.type}
+            >
+              <option value="all">Gatos e Cachorros</option>
+              <option value="cat">Gatos</option>
+              <option value="dog">Cachorros</option>
+            </HeaderSelect>
+            <img src={chevron} alt="" />
+          </SelectWrapper>
+        </Header>
+        <Display>
+          {pets.map((pet) => (
+            <Link key={pet.id} to={`/pet-profile/${pet.id}`}>
+              <Card path={pet.photo_url} type={pet.type} name={pet.name} />
+            </Link>
+          ))}
+        </Display>
+      </Content>
+    </Container>
   )
 }
